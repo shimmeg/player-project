@@ -2,7 +2,7 @@ package org.shimmeg.services.messaging.model;
 
 import java.io.Serializable;
 
-public class Message implements Serializable{
+public class Message implements Serializable {
     private final int receiverId;
     private final int senderId;
     private final String text;
@@ -52,6 +52,10 @@ public class Message implements Serializable{
         public Message build() {
             return new Message(receiverId, senderId, text);
         }
+    }
+
+    public static Message createStopMessageForPlayer(int playerId) {
+        return new Message(playerId, 0, "stop");
     }
 
 }

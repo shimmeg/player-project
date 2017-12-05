@@ -4,9 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AppSettings {
-    private AppSettings() {};
 
+    private static final String SERVER_HOST = "127.0.0.1";
     private static final Map<Setting, Object> settings = new HashMap<>();
+
+    private AppSettings() {}
+
+    public static String getServerHost() {
+        return SERVER_HOST;
+    }
 
     public static void setPort(int port) {
         settings.put(Setting.PORT, port);
@@ -25,6 +31,7 @@ public class AppSettings {
         ApplicationMode mode = (ApplicationMode) settings.get(Setting.APP_MODE);
         return mode != null ? mode : ApplicationMode.SINGLE_PROCESS;
     }
+
 
     public enum Setting {
         PORT, APP_MODE

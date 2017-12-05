@@ -3,8 +3,6 @@ package org.shimmeg.model;
 import org.shimmeg.services.ServicesProvider;
 import org.shimmeg.services.messaging.model.Message;
 
-import java.io.Serializable;
-
 import static org.shimmeg.settings.AppSettings.*;
 
 public class Player {
@@ -43,12 +41,14 @@ public class Player {
 
     public void onNewMessageReceived() {
         Message message = ServicesProvider.getMessagingService().getLastMessageForPlayer(this);
-
         System.out.println("Player " + this.toString() + " received message: " + message.getText());
 
         receivedMessagesCount += 1;
-        if (StopCommunicationCondition.isReached(receivedMessagesCount, sentMessagesCount)) return;
-
+        if (StopCommunicationCondition.isReached(receivedMessagesCount, sentMessagesCount)) {
+            ServicesProvider.getMessagingService().sendStopMessage(message.getSenderId());
+            ServicesProvider.getMessagingService().finishCommunication();
+            return;
+        }
         sendMessage(message.getText() + sentMessagesCount, message.getSenderId());
     }
 

@@ -13,9 +13,6 @@ public abstract class AbstractMessageSystem implements MessageSystem {
     private Map<Integer, ConcurrentLinkedQueue<Message>> messages = new HashMap<>();
 
     @Override
-    public abstract void sendMessage(Message msg);
-
-    @Override
     public Message getLastMessageForPlayer(Player player) {
         ConcurrentLinkedQueue<Message> msgQueue = this.messages.get(player.getPlayerId());
         return msgQueue == null ? null : msgQueue.poll();
