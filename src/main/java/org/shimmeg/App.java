@@ -1,6 +1,8 @@
 package org.shimmeg;
 
 import org.shimmeg.model.Player;
+import org.shimmeg.services.ServicesProvider;
+import org.shimmeg.services.player.PlayerFactory;
 import org.shimmeg.settings.AppSettings;
 
 import java.util.Arrays;
@@ -11,16 +13,15 @@ public class App {
     public static void main(String[] args) {
         initializeAppConfig(args);
 
-        Player p1 = new Player("Petya");
-        Player p2 = new Player("Vasya");
+        PlayerFactory playerFactory = ServicesProvider.getPlayerFactory();
+        Player p1 = playerFactory.createNewPlayer("Petya");
+        Player p2 = playerFactory.createNewPlayer("Vasya");
         p1.sendMessage("Hello", p2);
-
-//        System.out.println("Application mode: " + AppSettings.getApplicationMode().toString() + "; port: " + AppSettings.getPort());
-//        System.out.println(Arrays.deepToString(args));
+        
     }
 
     private static void initializeAppConfig(String[] args) {
-        if (ApplicationMode.DISTRIBUTED.getOption().equals(args[0])) {
+        if (args.length == 2 && ApplicationMode.DISTRIBUTED.getOption().equals(args[0])) {
             AppSettings.setApplicationMode(ApplicationMode.DISTRIBUTED);
             AppSettings.setPort(Integer.parseInt(args[1]));
             System.out.println("Application working in Distributed mode; port: " + AppSettings.getPort());

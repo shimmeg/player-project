@@ -1,24 +1,24 @@
 package org.shimmeg.services.messaging.model;
 
-import org.shimmeg.model.Player;
+import java.io.Serializable;
 
-public class Message {
-    private final Player receiver;
-    private final Player sender;
+public class Message implements Serializable{
+    private final int receiverId;
+    private final int senderId;
     private final String text;
 
-    private Message(Player receiver, Player sender, String text) {
-        this.receiver = receiver;
-        this.sender = sender;
+    private Message(int receiverId, int senderId, String text) {
+        this.receiverId = receiverId;
+        this.senderId = senderId;
         this.text = text;
     }
 
-    public Player getReceiver() {
-        return receiver;
+    public int getReceiverId() {
+        return receiverId;
     }
 
-    public Player getSender() {
-        return sender;
+    public int getSenderId() {
+        return senderId;
     }
 
     public String getText() {
@@ -30,17 +30,17 @@ public class Message {
     }
 
     public static class Builder {
-        private Player receiver;
-        private Player sender;
+        private int receiverId;
+        private int senderId;
         private String text;
 
-        public Builder setReceiver(Player receiver) {
-            this.receiver = receiver;
+        public Builder setReceiverId(int receiverId) {
+            this.receiverId = receiverId;
             return this;
         }
 
-        public Builder setSender(Player sender) {
-            this.sender = sender;
+        public Builder setSenderId(int senderId) {
+            this.senderId = senderId;
             return this;
         }
 
@@ -50,7 +50,7 @@ public class Message {
         }
 
         public Message build() {
-            return new Message(receiver, sender, text);
+            return new Message(receiverId, senderId, text);
         }
     }
 

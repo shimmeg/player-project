@@ -2,13 +2,12 @@ package org.shimmeg.model;
 
 import org.shimmeg.services.ServicesProvider;
 import org.shimmeg.services.messaging.model.Message;
-import org.shimmeg.settings.AppSettings;
 
 import java.io.Serializable;
 
 import static org.shimmeg.settings.AppSettings.*;
 
-public class Player implements Serializable{
+public class Player {
 
     private final int playerId;
     private final String login;
@@ -20,16 +19,24 @@ public class Player implements Serializable{
         playerId = ServicesProvider.getPlayersIdGenerator().getNextId();
     }
 
-    public void sendMessage(String text, Player receiver) {
-        Message msg = buildMessage(text, receiver);
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public void sendMessage(String text, int receiverId) {
+        Message msg = buildMessage(text, receiverId);
         sentMessagesCount += 1;
         ServicesProvider.getMessagingService().sendMessage(msg);
     }
 
-    private Message buildMessage(String text, Player receiver) {
+    public void sendMessage(String text, Player player) {
+        sendMessage(text, player.getPlayerId());
+    }
+
+    private Message buildMessage(String text, int receiverId) {
         return Message.newBuilder()
-                .setReceiver(receiver)
-                .setSender(this)
+                .setReceiverId(receiverId)
+                .setSenderId(this.getPlayerId())
                 .setText(text)
                 .build();
     }
@@ -42,7 +49,7 @@ public class Player implements Serializable{
         receivedMessagesCount += 1;
         if (StopCommunicationCondition.isReached(receivedMessagesCount, sentMessagesCount)) return;
 
-        sendMessage(message.getText() + sentMessagesCount, message.getSender());
+        sendMessage(message.getText() + sentMessagesCount, message.getSenderId());
     }
 
     @Override
@@ -57,7 +64,7 @@ public class Player implements Serializable{
 
     @Override
     public int hashCode() {
-        return (int) (playerId ^ (playerId >>> 32));
+        return Integer.hashCode(playerId);
     }
 
     @Override
