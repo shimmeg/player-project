@@ -1,4 +1,4 @@
-package org.shimmeg.services.messaging.model;
+package org.shimmeg.model.messaging;
 
 import java.io.Serializable;
 

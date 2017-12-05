@@ -1,6 +1,6 @@
 package org.shimmeg.services.messaging;
 
-import org.shimmeg.services.messaging.model.Message;
+import org.shimmeg.model.messaging.Message;
 import org.shimmeg.model.Player;
 
 public interface MessageSystem {

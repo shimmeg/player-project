@@ -2,7 +2,7 @@ package org.shimmeg.services.messaging;
 
 import org.shimmeg.model.Player;
 import org.shimmeg.services.ServicesProvider;
-import org.shimmeg.services.messaging.model.Message;
+import org.shimmeg.model.messaging.Message;
 
 import java.util.HashMap;
 import java.util.Map;

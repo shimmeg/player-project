@@ -1,11 +1,6 @@
 package org.shimmeg.services.messaging;
 
-import org.shimmeg.services.messaging.model.Message;
-import org.shimmeg.model.Player;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import org.shimmeg.model.messaging.Message;
 
 public class SingleProcessMessageSystem extends AbstractMessageSystem {
 
